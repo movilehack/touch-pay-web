@@ -37,13 +37,6 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
             val updated_at : String
     )
 
-    private data class uploaded_by
-    (
-            val id: String,
-            val resource: String,
-            val type: String
-    )
-
     private data class createBuyerOutputDto
     (
             val id :	String,
@@ -82,7 +75,7 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
     private data class Transference
     (
             val amount: Double,
-            val description: String,
+            val description: String?,
             val transfer_date: String
     )
 
@@ -100,7 +93,7 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
 
     fun createTransference(dto: TransferenceDto) = consume.post("/transfers/" + dto.payerId + "/to/" + dto.receiverId, Transference(
             amount = dto.amount,
-            description = "",
+            description = dto.description,
             transfer_date = LocalDate.now().toString()
     ))
 }
