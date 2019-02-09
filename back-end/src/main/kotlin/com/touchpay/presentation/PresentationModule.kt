@@ -3,13 +3,10 @@ package com.touchpay.presentation
 import com.touchpay.common.Auditor
 import dagger.Module
 import dagger.Provides
-import io.vertx.core.http.HttpServerOptions
 import io.vertx.core.json.JsonObject
-import io.vertx.core.net.JksOptions
 import io.vertx.kotlin.ext.auth.KeyStoreOptions
 import io.vertx.kotlin.ext.auth.jwt.JWTAuthOptions
 import io.vertx.reactivex.core.Vertx
-import io.vertx.reactivex.core.http.HttpServer
 import io.vertx.reactivex.ext.auth.jwt.JWTAuth
 import javax.inject.Named
 import javax.inject.Singleton
@@ -18,7 +15,7 @@ import javax.inject.Singleton
 class PresentationModule constructor(private val vertx: Vertx, private val config: () -> JsonObject) {
     @Provides
     @Singleton
-    fun provideVertx(): Vertx = vertx
+    fun provideVertx() = vertx
 
     @Provides
     @Singleton
@@ -27,22 +24,11 @@ class PresentationModule constructor(private val vertx: Vertx, private val confi
 
     @Provides
     @Named("config")
-    fun provideConfig(): JsonObject = config()
+    fun provideConfig() = config()
 
     @Provides
     @Singleton
-    fun provideHttpServer(@Named("config") config: JsonObject): HttpServer{
-        val certificate = config.getJsonObject("ssl")
-
-        return if (certificate != null) vertx.createHttpServer(HttpServerOptions()
-            .setLogActivity(true)
-            .setSsl(true)
-            .setKeyStoreOptions(
-                JksOptions()
-                    .setPath(certificate.getString("keystore"))
-                    .setPassword(certificate.getString("password"))
-            )) else vertx.createHttpServer()
-    }
+    fun provideHttpServer() = vertx.createHttpServer()
 
     @Provides
     @Singleton

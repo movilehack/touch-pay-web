@@ -36,6 +36,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../back-end/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../back-end/src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../back-end/build/generated/source/kapt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../back-end/src/main/conf" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../back-end/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../back-end/build" />
       <excludeFolder url="file://$MODULE_DIR$/../../back-end/out" />
