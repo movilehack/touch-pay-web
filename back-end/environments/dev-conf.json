@@ -1,0 +1,16 @@
+{
+    "environment": "Development",
+    "port" : 8083,
+    "mongo": {
+        "host": "54.200.187.110",
+        "port": 27017,
+        "db_name": "touchpay"
+    },
+    "auth": {
+        "path": "jwt_keystore.jceks",
+        "password": "touchpay"
+    },
+    "consumeApi": {
+
+    }
+}
