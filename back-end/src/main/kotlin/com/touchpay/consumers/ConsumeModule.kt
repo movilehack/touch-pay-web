@@ -30,6 +30,7 @@ class ConsumeModule {
                 consumeApiJsonObject.getString("host"),
                 consumeApiJsonObject.getBoolean("ssl",false),
                 consumeApiJsonObject.getBoolean("abs",false),
-                consumeApiJsonObject.getJsonObject("options"))
+                null,
+                consumeApiJsonObject.getString("authorization"))
     }
 }

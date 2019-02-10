@@ -1,6 +1,6 @@
 {
     "environment": "Development",
-    "port" : 80,
+    "port": 80,
     "mongo": {
         "host": "10.98.0.140",
         "port": 27017,
@@ -13,9 +13,9 @@
     "consumeApi": {
         "zoop" : {
             "host": "api.zoop.ws/v1/marketplaces/3249465a7753536b62545a6a684b0000",
-            "options": {
-                "username": "zpk_test_EzCkzFFKibGQU6HFq7EYVuxI"
-            }
+            "ssl": true,
+            "abs": true,
+            "authorization": "Basic enBrX3Rlc3RfRXpDa3pGRktpYkdRVTZIRnE3RVlWdXhJOg=="
         }
     }
 }

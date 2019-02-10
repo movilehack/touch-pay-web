@@ -8,30 +8,30 @@ import javax.inject.Named
 
 class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: ConsumeApi){
 
-    private data class createSellerOutputDto
+    private data class CreateSellerOutputDto
     (
             val id :	String,
             val status : String,
             val resource : String,
-            val account_balance: Int,
-            val current_balance	 : Int,
-            val fiscal_responsibility: String,
+            val account_balance: Double,
+            val current_balance	 : Double,
+            val fiscal_responsibility: String?,
             val first_name : String,
-            val last_name : String,
+            val last_name : String?,
             val email : String,
             val phone_number : String,
             val taxpayer_id : String,
             val birthdate : String,
-            val statement_descriptor: String,
-            val description : String,
-            val Address : Address,
-            val delinquent : Boolean,
-            val default_debit : String,
-            val default_credit : String,
-            val mcc: String,
-            val metadata : Any,
-            val created_at : String,
-            val updated_at : String
+            val statement_descriptor: String?,
+            val description : String?,
+            val Address : Address?,
+            val delinquent : Boolean?,
+            val default_debit : String?,
+            val default_credit : String?,
+            val mcc: String?,
+            val metadata : Any?,
+            val created_at : String?,
+            val updated_at : String?
     )
 
     private data class Address
@@ -60,7 +60,7 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
             val description : String?
     )
 
-    fun createSeller(dto: SellerRegisterDto) = consume.post<createSellerOutputDto>("/sellers/individuals", dto).map {
+    fun createSeller(dto: SellerRegisterDto) = consume.post<CreateSellerOutputDto>("/sellers/individuals", dto).map {
         SellerRegisterOutputDto(
                 id = it.id
         )
