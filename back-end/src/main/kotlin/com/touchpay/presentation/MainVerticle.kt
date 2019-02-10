@@ -10,10 +10,10 @@ class MainVerticle : AbstractVerticle() {
 
         presentation.routerBuilder.build {
             post("sign/in") go { authenticationController::signIn }
-            onlyAuthenticated().to {
+            onlyAuthenticated() to {
                 post("change/limit") go { controlController::changeLimit }
-                post("block") go { authenticationController::signIn }
-                post("unblock") go { authenticationController::signIn }
+                post("block") go { controlController::block }
+                post("unblock") go { controlController::unblock }
                 post("pay") go { authenticationController::signIn }
             }
         }
