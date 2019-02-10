@@ -1,8 +1,7 @@
 package com.touchpay.business.validators
 
-
 import com.touchpay.common.Translate
-import com.touchpay.domain.exceptions.ValidatorException
+import com.touchpay.exceptions.ValidatorException
 import java.util.*
 
 @ValidatorMarker

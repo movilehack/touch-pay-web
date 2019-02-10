@@ -15,8 +15,12 @@ class ControlController @Inject constructor(private val service: ControlService)
         input.body<ChangeLimitDto>().flatMapCompletable(service::changeLimit).toSingleDefault(ok())
 
     fun block(input: Single<RoutingContext>): Single<RouteResult> =
-        input.body<BlockDto>().flatMapCompletable(service::block).toSingleDefault(ok())
+        input.body<BlockDto>().flatMapCompletable {
+            service.changeBlock(it, true)
+        }.toSingleDefault(ok())
 
     fun unblock(input: Single<RoutingContext>): Single<RouteResult> =
-        input.body<BlockDto>().flatMapCompletable(service::unblock).toSingleDefault(ok())
+        input.body<BlockDto>().flatMapCompletable {
+            service.changeBlock(it, false)
+        }.toSingleDefault(ok())
 }

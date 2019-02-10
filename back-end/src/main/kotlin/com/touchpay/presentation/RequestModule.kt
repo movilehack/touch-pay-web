@@ -26,4 +26,8 @@ class RequestModule constructor(private val routingContext: RoutingContext) {
         }
         return Translate(resourceBundle)
     }
+
+    @Provides
+    @RequestScope
+    fun provideCredential() = credential
 }

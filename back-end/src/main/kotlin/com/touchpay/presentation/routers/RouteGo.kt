@@ -1,9 +1,9 @@
 package com.touchpay.presentation.routers
 
 import com.touchpay.common.Translate
-import com.touchpay.domain.exceptions.I18nException
-import com.touchpay.domain.exceptions.NotAuthorizedException
-import com.touchpay.domain.exceptions.ValidatorException
+import com.touchpay.exceptions.I18nException
+import com.touchpay.exceptions.NotAuthorizedException
+import com.touchpay.exceptions.ValidatorException
 import com.touchpay.presentation.PresentationComponent
 import com.touchpay.presentation.RequestComponent
 import com.touchpay.presentation.RequestModule

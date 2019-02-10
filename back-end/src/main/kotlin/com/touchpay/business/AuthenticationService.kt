@@ -2,8 +2,8 @@ package com.touchpay.business
 
 import com.touchpay.business.validators.ValidatorBuilder
 import com.touchpay.business.validators.notEmpty
-import com.touchpay.domain.exceptions.SignInException
 import com.touchpay.dto.SignInDto
+import com.touchpay.exceptions.SignInException
 import com.touchpay.persistence.dao.AuthenticationDao
 import io.reactivex.Single
 import org.mindrot.jbcrypt.BCrypt
