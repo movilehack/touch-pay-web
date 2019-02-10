@@ -21,7 +21,6 @@ class ConsumeApi(private val webClient: WebClient,
                  private val host: String,
                  private val ssl: Boolean,
                  private val abs: Boolean,
-                 val options: JsonObject? = null,
                  private val authorization: String? = null) {
 
     private fun createRequest(uri: String, request: (uri: String) -> HttpRequest<Buffer>, authorization: String?): HttpRequest<Buffer> {
