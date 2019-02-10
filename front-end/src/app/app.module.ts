@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -14,6 +14,11 @@ import { NgxErrorsModule } from '@hackages/ngxerrors';
 import { RegisterComponent } from './pages/register/register.component';
 import { MenuComponent } from './components/menu/menu.component';
 import {NgxMaskModule} from 'ngx-mask';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
+import { ErrorHandlingInterceptor } from './interceptor/error.handling.interceptor';
+import { LoginService } from './services/login.service';
+import { AuthenticationService } from './services/authentication.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,7 +30,8 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPageComponent,
     LoginComponent,
     RegisterComponent,
-    MenuComponent
+    MenuComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,20 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
   ],
-  providers: [],
+  providers: [
+    LoginService,
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlingInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

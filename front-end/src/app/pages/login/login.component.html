@@ -2,15 +2,12 @@
 <div class="outer">
     <div class="middle row">
       <div class="inner col-10 offset-1 col-md-6">
-        <form class="row" [formGroup]="formGroup">
+        <form class="row" [formGroup]="formGroup" (submit)="login()">
           
           <div class='form-group col-12'>
             <label for='email'>Enter your email</label>
             <input class="form-control" type='email' formControlName="email" />
             <ul ngxErrors="email" class="error-list">
-              <li ngxError="email" when="touched">
-                Email is invalid
-              </li>    
               <li ngxError="required" when="touched">
                 Email is required
               </li>
@@ -31,7 +28,7 @@
           </div>
   
           <div class="col-12">
-            <button class='btn btn-primary form-group btn-full' [disabled]="!formGroup.valid" (click)="login()">Login</button>
+            <button type="submit" class='btn btn-primary form-group btn-full' [disabled]="!formGroup.valid">Login</button>
           </div>
           
           <div class='input-field col-12 center form-group'>

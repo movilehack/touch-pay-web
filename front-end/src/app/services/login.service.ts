@@ -13,15 +13,15 @@ export class LoginService {
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   public login(login: string, password: string): Observable<Token> {
-    return this.http.post<Token>('api/authentication', {
-      login: login,
-      password: password
+
+    return this.http.post<Token>('api/sign/in', {
+      email: login,
+      password
     }).pipe(
       map((t: Token) => {
         this.authService.token = t.token;
-        this.authService.role = t.role
         return t;
       })
-    )
+    );
   }
 }
