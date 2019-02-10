@@ -17,5 +17,6 @@ data class Credential(
     val limit: Double,
     @field:Sensitive val password: String,
     @field:Sensitive val pin: String,
-    val birthDate: LocalDate
+    val birthDate: LocalDate,
+    val zoopId: String
 )
