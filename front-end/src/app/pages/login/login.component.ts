@@ -25,22 +25,25 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.lock();
-    this.loginService.login(this.formGroup.controls['email'].value, this.formGroup.controls['password'].value).subscribe(
+    this.loginService.login(this.formGroup.controls.email.value, this.formGroup.controls.password.value).subscribe(
       response => {
-        console.log('response');
-        this.router.navigate(['dashboard']);
+        console.log(response);
+        //this.router.navigate(['dashboard']);
         this.unlock();
       },
+      err => {
+        this.unlock();
+      }
     );
   }
 
   private lock() {
-    this.formGroup.controls['email'].disable();
-    this.formGroup.controls['password'].disable();
+    this.formGroup.controls.email.disable();
+    this.formGroup.controls.password.disable();
   }
 
   private unlock() {
-    this.formGroup.controls['email'].enable();
-    this.formGroup.controls['password'].enable();
+    this.formGroup.controls.email.enable();
+    this.formGroup.controls.password.enable();
   }
 }

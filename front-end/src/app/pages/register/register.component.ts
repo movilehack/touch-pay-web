@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.form = fb.group({
       fullname: ['', Validators.required],
       login: ['', Validators.required],
@@ -31,7 +32,6 @@ export class RegisterComponent implements OnInit {
   register() {
     const controls = this.form.controls;
     const datestr = controls.birthDate.value;
-    alert(datestr);
     const date =
     new Date(parseInt(datestr.substring(0, 2), 10),
             parseInt(datestr.substring(2, 4), 10) - 1,
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         number: controls.number.value
       }
     }).subscribe(x => {
-      console.log(x);
+      //this.router.navigate(['login']);
     });
   }
 }
