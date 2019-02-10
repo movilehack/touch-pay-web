@@ -9,7 +9,7 @@ class MainVerticle : AbstractVerticle() {
                 .build()
 
         presentation.routerBuilder.build {
-
+            post("sign/in") go { authenticationController::signIn }
         }
     }
 }
