@@ -1,6 +1,7 @@
 package com.touchpay.presentation.controllers
 
 import com.touchpay.business.RegisterService
+import com.touchpay.dto.BlockDto
 import com.touchpay.dto.RegisterDto
 import com.touchpay.presentation.body
 import com.touchpay.presentation.json

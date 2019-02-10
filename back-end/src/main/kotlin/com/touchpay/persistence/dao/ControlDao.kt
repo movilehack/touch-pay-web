@@ -16,4 +16,10 @@ class ControlDao @Inject constructor(private val database: Database) {
     }, JsonBuilder {
         "block" to block
     }.json)
+
+    fun changePin(id: String, pin: String) = database.update("credential", Find {
+        "_id" to id
+    }, JsonBuilder {
+        "pin" to pin
+    }.json)
 }

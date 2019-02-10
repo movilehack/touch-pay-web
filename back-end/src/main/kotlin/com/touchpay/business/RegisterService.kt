@@ -2,6 +2,7 @@ package com.touchpay.business
 
 import com.touchpay.domain.Credential
 import com.touchpay.domain.TransferMetadata
+import com.touchpay.dto.BlockDto
 import com.touchpay.dto.RegisterDto
 import com.touchpay.persistence.dao.CredentialDao
 import io.reactivex.Single
