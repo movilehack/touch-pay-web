@@ -1,7 +1,6 @@
 package com.touchpay.consumers
 
 import com.touchpay.dto.zoop.*
-import com.touchpay.dto.zoop.output.SellerRegisterOutputDto
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Named
@@ -61,20 +60,18 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
     )
 
     fun createSeller(dto: SellerRegisterDto) = consume.post<CreateSellerOutputDto>("/sellers/individuals", dto).map {
-        SellerRegisterOutputDto(
-                id = it.id
-        )
+        it.id
     }
 
     fun registerBank(dto: RegisterBankDto) = consume.post("/bank_account", dto)
 
-    fun createTransference(dto: TransferenceDto) = consume.post("/transfers/${{dto.payerId}}/to/${{dto.receiverId}}", Transference(
+    fun createTransference(dto: TransferenceDto) = consume.post("/transfers/${dto.payerId}/to/${dto.receiverId}", Transference(
             amount = dto.amount,
             description = dto.description,
             transfer_date = LocalDate.now().toString()
     ))
 
-    fun transferToBank(dto: TransferenceToBankDto) = consume.post("/bank_accounts/${{dto.bankId}}/transfers", TransferenceToBank(
+    fun transferToBank(dto: TransferenceToBankDto) = consume.post("/bank_accounts/${dto.bankId}/transfers", TransferenceToBank(
             amount  = dto.amount,
             statement_descriptor = dto.statement_descriptor,
             description = dto.description

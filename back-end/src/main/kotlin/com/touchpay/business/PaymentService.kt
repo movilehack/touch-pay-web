@@ -17,15 +17,15 @@ class PaymentService @Inject constructor(private val credentialDao: CredentialDa
                                          private val consumer: ZoopConsumer,
                                          private val credential: Credential?) {
 
-    fun pay(dto: PayDto) = authenticationDao.getPinByUsername(dto.username).flatMapCompletable {
-        if (!it.isPresent || !BCrypt.checkpw(dto.password, it.get())) {
+    fun pay(dto: PayDto) = authenticationDao.getPinByUsername(dto.login).flatMapCompletable {
+        if (!it.isPresent || !BCrypt.checkpw(dto.pin, it.get())) {
             throw PinInvalidException()
         }
-        credentialDao.getByUsername(dto.username).flatMapCompletable { payer ->
+        credentialDao.getByUsername(dto.login).flatMapCompletable { payer ->
             consumer.createTransference(TransferenceDto(
                 payerId = payer.get().zoopId,
                 receiverId = credential?.zoopId!!,
-                amount = dto.amout,
+                amount = dto.value,
                 description = dto.deviceId
             ))
         }

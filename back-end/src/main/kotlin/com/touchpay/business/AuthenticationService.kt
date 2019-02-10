@@ -34,14 +34,14 @@ class AuthenticationService @Inject constructor(validatorBuilder: ValidatorBuild
     fun signIn(dto: SignInDto): Single<String> {
         validatorSignInDto.validate(dto)
         return dao.getCredentialByEmail(dto.email).map {
-            if (!it.isPresent || !BCrypt.checkpw(dto.password, it.get())) {
+            if (!it.isPresent || !BCrypt.checkpw(dto.password, it.get().password)) {
                 throw SignInException()
             }
 
             val now = LocalDateTime.now()
             val json = JsonBuilder {
                 //sub (subject) = Entidade à quem o token pertence, normalmente o ID do usuário;
-                "sub" to it.get()
+                "sub" to it.get()._id
                 //iss (issuer) = Emissor do token;
                 "iss" to "touchpay"
                 //iat (issued at) = Timestamp de quando o token foi criado;

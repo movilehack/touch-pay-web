@@ -1,8 +1,8 @@
 package com.touchpay.dto
 
 data class PayDto(
-    val username: String,
-    val password: String,
-    val amout: Double,
-    val deviceId: String
+        val login: String,
+        val pin: String,
+        val value: Double,
+        val deviceId: String
 )
