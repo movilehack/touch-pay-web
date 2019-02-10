@@ -15,18 +15,18 @@ import javax.inject.Inject
 class PaymentService @Inject constructor(private val credentialDao: CredentialDao,
                                          private val authenticationDao: AuthenticationDao,
                                          private val consumer: ZoopConsumer,
-                                         private val user: Credential) {
+                                         private val credential: Credential?) {
 
     fun pay(dto: PayDto) = authenticationDao.getPinByUsername(dto.username).flatMapCompletable {
         if (!it.isPresent || !BCrypt.checkpw(dto.password, it.get())) {
             throw PinInvalidException()
         }
-        credentialDao.getByUsername(dto.username).flatMapCompletable { credential ->
+        credentialDao.getByUsername(dto.username).flatMapCompletable { payer ->
             consumer.createTransference(TransferenceDto(
-                    payerId = credential.get().zoopId,
-                    receiverId = user.zoopId,
-                    amount = dto.amout,
-                    description = dto.deviceId
+                payerId = payer.get().zoopId,
+                receiverId = credential?.zoopId!!,
+                amount = dto.amout,
+                description = dto.deviceId
             ))
         }
     }
