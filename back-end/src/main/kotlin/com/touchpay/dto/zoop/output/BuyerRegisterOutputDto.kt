@@ -1,4 +1,4 @@
-package com.touchpay.dto.Zoop.Output
+package com.touchpay.dto.zoop.output
 
 data class BuyerRegisterOutputDto(
         val id : String

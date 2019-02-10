@@ -1,4 +1,4 @@
-package com.touchpay.dto.Zoop
+package com.touchpay.dto.zoop
 
 data class TransferenceDto(
     val payerId: String,

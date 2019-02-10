@@ -1,10 +1,10 @@
 package com.touchpay.consumers
 
-import com.touchpay.dto.Zoop.BuyerRegisterDto
-import com.touchpay.dto.Zoop.Output.BuyerRegisterOutputDto
-import com.touchpay.dto.Zoop.Output.SellerRegisterOutputDto
-import com.touchpay.dto.Zoop.SellerRegisterDto
-import com.touchpay.dto.Zoop.TransferenceDto
+import com.touchpay.dto.zoop.BuyerRegisterDto
+import com.touchpay.dto.zoop.output.BuyerRegisterOutputDto
+import com.touchpay.dto.zoop.output.SellerRegisterOutputDto
+import com.touchpay.dto.zoop.SellerRegisterDto
+import com.touchpay.dto.zoop.TransferenceDto
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Named

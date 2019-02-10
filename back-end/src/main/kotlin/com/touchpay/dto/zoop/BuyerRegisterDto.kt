@@ -1,4 +1,4 @@
-package com.touchpay.dto.Zoop
+package com.touchpay.dto.zoop
 
 import com.touchpay.domain.Address
 
