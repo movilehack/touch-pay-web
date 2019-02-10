@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.touchpay.common.Auditor
 import com.touchpay.serializers.mapFrom
 import com.touchpay.serializers.mapTo
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.vertx.core.json.DecodeException
-import io.vertx.core.json.JsonObject
 import io.vertx.reactivex.core.MultiMap
 import io.vertx.reactivex.core.buffer.Buffer
 import io.vertx.reactivex.ext.web.client.HttpRequest
@@ -67,6 +67,16 @@ class ConsumeApi(private val webClient: WebClient,
         }
     }
 
+    private fun Single<HttpResponse<Buffer>>.mapResponse(): Completable {
+        return this.doOnSuccess {
+            auditor.info("result-status-message -> {0}", it.statusMessage())
+
+            if (it.statusCode() !in 200..299) {
+                throw Exception(it.statusMessage())
+            }
+        }.toCompletable()
+    }
+
     private fun <T : Any> form(uri: String, request: (uri: String) -> HttpRequest<Buffer>, kclass: KClass<T>, formData: Map<String, String>, authorization: String?): Single<T> {
         val httpRequest = createRequest(uri, request, authorization)
         val form = MultiMap.caseInsensitiveMultiMap()
@@ -98,7 +108,7 @@ class ConsumeApi(private val webClient: WebClient,
 
     fun <T : Any> post(uri: String, kclass: KClass<T>, formData: Map<String, String>, authorization: String?) = form(uri, if (abs) webClient::postAbs else webClient::post, kclass, formData, authorization)
 
-    fun post(uri: String, body: Any?) = body(uri, if (abs) webClient::postAbs else webClient::post, body, authorization).toCompletable()
+    fun post(uri: String, body: Any?) = body(uri, if (abs) webClient::postAbs else webClient::post, body, authorization).mapResponse()
 
     inline fun <reified T : Any> post(uri: String, formData: Map<String, String>, authorization: String? = null) = post(uri, T::class, formData, authorization)
 
