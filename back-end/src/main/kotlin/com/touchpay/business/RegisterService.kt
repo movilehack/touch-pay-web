@@ -43,7 +43,8 @@ class RegisterService @Inject constructor(private val passwordService: PasswordS
                     password = BCrypt.hashpw(dto.password, BCrypt.gensalt()),
                     pin = BCrypt.hashpw(pin, BCrypt.gensalt()),
                     birthDate = dto.birthDate,
-                    zoopId = it))
+                    zoopId = it,
+                    bankId = null))
         }.map { pin }
     }
 }

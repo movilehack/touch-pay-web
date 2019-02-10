@@ -59,11 +59,50 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
             val description : String?
     )
 
+    private data class RegisterBankOutputDto
+    (
+            val id: String,
+            val resource: String,
+            val holder_name: String,
+            val taxpayer_id: String,
+            val description: String?,
+            val bank_name: String,
+            val bank_code: String,
+            val type: String,
+            val last4_digits: String,
+            val account_number: Long,
+            val country_code: String,
+            val routing_number: Long,
+            val phone_number: String?,
+            val is_active: Boolean,
+            val is_verified: Boolean,
+            val debitable: Boolean,
+            val customer: String?,
+            val fingerprint: String?,
+            val address: Address?,
+            val verification_checklist: VerificationChecklist,
+            val metadata: Any?,
+            val uri: String,
+            val created_at: String,
+            val updated_at: String
+    )
+
+    private data class VerificationChecklist
+    (
+        val postal_code_check : String,
+        val address_line1_check: String,
+        val deposit_check: String
+    )
+
     fun createSeller(dto: SellerRegisterDto) = consume.post<CreateSellerOutputDto>("/sellers/individuals", dto).map {
         it.id
     }
 
-    fun registerBank(dto: RegisterBankDto) = consume.post("/bank_account", dto)
+    fun associateBank(dto: AssociateBankCustomerDto) = consume.post("/bank_account", dto)
+
+    fun registerBank(dto: RegisterBankDto) = consume.post<RegisterBankOutputDto>("bank_accounts/tokens", dto).map {
+        it.id
+    }
 
     fun createTransference(dto: TransferenceDto) = consume.post("/transfers/${dto.payerId}/to/${dto.receiverId}", Transference(
             amount = dto.amount,

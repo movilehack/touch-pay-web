@@ -9,6 +9,8 @@ import com.touchpay.dto.zoop.TransferenceToBankDto
 import com.touchpay.exceptions.PinInvalidException
 import com.touchpay.persistence.dao.AuthenticationDao
 import com.touchpay.persistence.dao.CredentialDao
+import io.reactivex.Completable
+import io.reactivex.Single
 import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
@@ -32,9 +34,11 @@ class PaymentService @Inject constructor(private val credentialDao: CredentialDa
     }
 
     fun cashOut(dto: CashOutDto) = consumer.transferToBank(TransferenceToBankDto(
-        bankId = "",
+        bankId = credential!!.bankId!!,
         amount = dto.amount,
         statement_descriptor = dto.statement_descriptor,
         description = dto.description
     ))
+
+    fun cashIn() = Completable.complete() //Endpoint não disponibilizado pela api da zoop no hackaton
 }

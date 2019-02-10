@@ -2,6 +2,7 @@ package com.touchpay.persistence.dao
 
 import com.touchpay.domain.Credential
 import com.touchpay.persistence.json.Find
+import com.touchpay.persistence.json.JsonBuilder
 import io.vertx.core.json.JsonObject
 import javax.inject.Inject
 
@@ -17,4 +18,10 @@ class CredentialDao @Inject constructor(private val database: Database) {
     fun getByUsername(username: String) = database.genericFindOne<Credential>("credential", Find {
         "login" to username
     })
+
+    fun updateBankId(id: String, bankId: String) = database.update("credential", Find {
+        "_id" to id
+    }, JsonBuilder {
+        "bankId" to bankId
+    }.json)
 }

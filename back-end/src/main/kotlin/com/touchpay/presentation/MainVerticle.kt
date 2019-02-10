@@ -20,6 +20,7 @@ class MainVerticle : AbstractVerticle() {
                 post("cash/out") go { paymentController::cashOut }
                 post("cash/in") go { paymentController::cashIn }
                 post("register/bank") go { bankController::registerBank }
+                post("associate/bank") go { bankController::associateBank}
             }
         }
     }
