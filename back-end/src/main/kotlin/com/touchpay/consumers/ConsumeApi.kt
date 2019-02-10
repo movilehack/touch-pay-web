@@ -77,6 +77,10 @@ class ConsumeApi(private val webClient: WebClient,
     }
 
     private fun <T : Any> body(uri: String, request: (uri: String) -> HttpRequest<Buffer>, kclass: KClass<T>, body: Any?, authorization: String?): Single<T> {
+        return body(uri, request, body, authorization).mapResponse(kclass)
+    }
+
+    private fun body(uri: String, request: (uri: String) -> HttpRequest<Buffer>, body: Any?, authorization: String?): Single<HttpResponse<Buffer>> {
         val httpRequest = createRequest(uri, request, authorization)
 
         return (if (body != null) {
@@ -84,7 +88,7 @@ class ConsumeApi(private val webClient: WebClient,
             auditor.info("body -> {0}", body)
             httpRequest.rxSendJsonObject(bodyJsonObject)
         }
-        else httpRequest.sendWithNone()).mapResponse(kclass)
+        else httpRequest.sendWithNone())
     }
 
     private fun HttpRequest<Buffer>.sendWithNone() = this.putHeader("Content-Length", "0").rxSend()
@@ -94,6 +98,8 @@ class ConsumeApi(private val webClient: WebClient,
     inline fun <reified T : Any> post(uri: String, body: Any? = null, authorization: String? = null) = post(uri, T::class, body, authorization)
 
     fun <T : Any> post(uri: String, kclass: KClass<T>, formData: Map<String, String>, authorization: String?) = form(uri, if (abs) webClient::postAbs else webClient::post, kclass, formData, authorization)
+
+    fun post(uri: String, body: Any?) = body(uri, if (abs) webClient::postAbs else webClient::post, body, authorization)
 
     inline fun <reified T : Any> post(uri: String, formData: Map<String, String>, authorization: String? = null) = post(uri, T::class, formData, authorization)
 
