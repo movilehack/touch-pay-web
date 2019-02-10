@@ -26,11 +26,10 @@ class ConsumeModule {
         return ConsumeApi(WebClient.create(vertx),
                 consumeObjectMapperManager[key],
                 auditor,
-                consumeApiJsonObject.getInteger("port"),
+                null,
                 consumeApiJsonObject.getString("host"),
                 consumeApiJsonObject.getBoolean("ssl",false),
                 consumeApiJsonObject.getBoolean("abs",false),
-                consumeApiJsonObject.getJsonObject("options"),
-                consumeApiJsonObject.getString("authorization"))
+                consumeApiJsonObject.getJsonObject("options"))
     }
 }

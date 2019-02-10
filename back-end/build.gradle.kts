@@ -43,6 +43,7 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     compile("com.google.dagger:dagger:2.13")
+    compile("org.mindrot:jbcrypt:0.3m")
     kapt("com.google.dagger:dagger-compiler:2.13")
 }
 

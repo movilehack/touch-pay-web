@@ -1,10 +1,7 @@
 package com.touchpay.presentation
 
 import com.touchpay.common.Translate
-import com.touchpay.presentation.controllers.AuthenticationController
-import com.touchpay.presentation.controllers.ControlController
-import com.touchpay.presentation.controllers.PaymentController
-import com.touchpay.presentation.controllers.RegisterController
+import com.touchpay.presentation.controllers.*
 import dagger.Subcomponent
 
 @RequestScope
@@ -15,4 +12,5 @@ interface RequestComponent {
     val controlController: ControlController
     val registerController: RegisterController
     val paymentController: PaymentController
+    val bankController: BankController
 }

@@ -1,7 +1,5 @@
 package com.touchpay.dto.zoop
 
-import com.touchpay.domain.Address
-
 data class BuyerRegisterDto(
         val first_name : String?,
         val last_name : String?,
@@ -10,5 +8,5 @@ data class BuyerRegisterDto(
         val taxpayer_id : String?,
         val birthdate : String?,
         val description : String?,
-        val address : Address?
+        val address : AddressDto?
 )

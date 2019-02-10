@@ -1,3 +1,3 @@
-package com.touchpay.domain.exceptions
+package com.touchpay.exceptions
 
 class NotAuthorizedException : Exception()

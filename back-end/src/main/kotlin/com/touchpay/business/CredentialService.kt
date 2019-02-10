@@ -3,7 +3,7 @@ package com.touchpay.business
 import com.touchpay.domain.Credential
 import com.touchpay.domain.CredentialKind
 import com.touchpay.domain.Permission
-import com.touchpay.domain.exceptions.NotAuthorizedException
+import com.touchpay.exceptions.NotAuthorizedException
 import com.touchpay.persistence.dao.CredentialDao
 import com.touchpay.persistence.json.JsonBuilder
 import io.reactivex.Observable

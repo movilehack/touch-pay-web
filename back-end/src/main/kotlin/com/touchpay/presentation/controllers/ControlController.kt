@@ -4,6 +4,7 @@ import com.touchpay.business.ControlService
 import com.touchpay.dto.BlockDto
 import com.touchpay.dto.ChangeLimitDto
 import com.touchpay.presentation.body
+import com.touchpay.presentation.json
 import com.touchpay.presentation.ok
 import com.touchpay.presentation.routers.RouteResult
 import io.reactivex.Single
@@ -15,8 +16,15 @@ class ControlController @Inject constructor(private val service: ControlService)
         input.body<ChangeLimitDto>().flatMapCompletable(service::changeLimit).toSingleDefault(ok())
 
     fun block(input: Single<RoutingContext>): Single<RouteResult> =
-        input.body<BlockDto>().flatMapCompletable(service::block).toSingleDefault(ok())
+        input.body<BlockDto>().flatMapCompletable {
+            service.changeBlock(it, true)
+        }.toSingleDefault(ok())
 
     fun unblock(input: Single<RoutingContext>): Single<RouteResult> =
-        input.body<BlockDto>().flatMapCompletable(service::unblock).toSingleDefault(ok())
+        input.body<BlockDto>().flatMapCompletable {
+            service.changeBlock(it, false)
+        }.toSingleDefault(ok())
+
+    fun generatePin(input: Single<RoutingContext>): Single<RouteResult> =
+            input.body<BlockDto>().flatMap(service::generatePin).map(::json)
 }
