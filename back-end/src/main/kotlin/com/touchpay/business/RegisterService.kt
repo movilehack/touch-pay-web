@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class RegisterService @Inject constructor(private val passwordService: PasswordService, private val dao: CredentialDao) {
     fun register(dto: RegisterDto): Single<String> {
-        val pin = BCrypt.hashpw(passwordService.generateCodePassword(), BCrypt.gensalt())
+        val pin = passwordService.generateCodePassword()
         return dao.register(Credential(
                 _id = null,
                 enabled = true,
