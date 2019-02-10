@@ -1,0 +1,49 @@
+
+    <div class="outer">
+        <div class="middle">
+          <div class="inner">
+            <form class="row" [formGroup]="formGroup">
+      
+              <div class='col s12'>
+                <h2>TouchPay</h2>
+              </div>
+              
+              <div class='input-field col s12'>
+                <input class='validate' type='email' formControlName="email" />
+                <label for='email'>Enter your email</label>
+              </div>
+              <ul ngxErrors="email" class="error-list">
+                <li ngxError="email" when="touched">
+                  Email is invalid
+                </li>    
+                <li ngxError="required" when="touched">
+                  Email is required
+                </li>
+              </ul>
+      
+              <div class='input-field col s12'>
+                <input class='validate' type='password' formControlName="password"/>
+                <label for='password'>Enter your password</label>
+              </div>
+              <ul ngxErrors="password" class="error-list">
+                <li ngxError="minlength" when="touched">
+                  Password length must be greater than 5
+                </li>
+                <li ngxError="required" when="touched">
+                  Password is required
+                </li>
+              </ul>
+              
+              <div class='input-field col s12'>
+                <label style='float: right;'>
+                  <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
+                </label>
+              </div>
+      
+              <div class='col s12'>
+                <button class='col s12 btn btn-large waves-effect indigo' [disabled]="!formGroup.valid" (click)="login()">Login</button>
+              </div>
+            </form>
+          </div>
+    </div>
+  </div>      
