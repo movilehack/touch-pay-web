@@ -15,8 +15,16 @@ class CredentialDao @Inject constructor(private val database: Database) {
 
     fun register(credential: Credential) = database.create("credential", credential)
 
-    fun getByUsername(username: String) = database.genericFindOne<Credential>("credential", Find {
-        "login" to username
+    fun hasByLogin(login: String) = database.count("credential", Find {
+        "login" to login
+    }).map { it > 0 }
+
+    fun hasByEmail(email: String) = database.count("credential", Find {
+        "email" to email
+    }).map { it > 0 }
+
+    fun getByUsername(login: String) = database.genericFindOne<Credential>("credential", Find {
+        "login" to login
     }).map {
         it.orElseThrow()
     }
