@@ -1,3 +1,8 @@
 {
-    "test": "This is a test"
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "aboutUs": "About Us",
+    "presentProduct": "Vai sair para a praia e não quer levar a carteira ou o celular? Chega junto entao",
+    "resumeProduct": "Somos uma aplicação onde com um simples cadastro você pode realizar pagamentos sem depender do celular ou do cartão",
+    "resumeProductTwo": "Garantimos a segurança dos seus dados e algo prático na hora do pagamento"
 }
