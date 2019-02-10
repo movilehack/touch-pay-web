@@ -13,6 +13,8 @@ class RegisterService @Inject constructor(private val passwordService: PasswordS
         return dao.register(Credential(
                 _id = null,
                 enabled = true,
+                block = false,
+                limit = 0.0,
                 cpf = dto.cpf,
                 login = dto.login,
                 name = dto.name,

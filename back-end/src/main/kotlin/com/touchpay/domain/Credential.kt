@@ -12,6 +12,8 @@ data class Credential(
     val email: String,
     val address: Address,
     val enabled: Boolean,
+    val block: Boolean,
+    val limit: Double,
     @field:Sensitive val password: String,
     @field:Sensitive val pin: String,
     val birthDate: LocalDate
