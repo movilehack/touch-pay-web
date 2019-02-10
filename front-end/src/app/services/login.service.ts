@@ -13,7 +13,7 @@ export class LoginService {
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   public login(login: string, password: string): Observable<Token> {
-    return this.http.post<Token>("api/authentication", {
+    return this.http.post<Token>('api/authentication', {
       login: login,
       password: password
     }).pipe(

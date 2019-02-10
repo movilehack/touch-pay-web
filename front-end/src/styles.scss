@@ -3,4 +3,5 @@
 @import './colors.scss';
 body{
     background-image: linear-gradient(to right, $start-gradient , $end-gradient);
+    width: 100%;
 }
