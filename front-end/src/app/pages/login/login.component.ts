@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
     this.lock();
     this.loginService.login(this.formGroup.controls.email.value, this.formGroup.controls.password.value).subscribe(
       response => {
-        console.log(response);
-        //this.router.navigate(['dashboard']);
+        this.router.navigate(['dashboard']);
         this.unlock();
       },
       err => {

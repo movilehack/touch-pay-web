@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Token } from '../models/token';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +11,14 @@ export class LoginService {
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
-  public login(login: string, password: string): Observable<Token> {
+  public login(login: string, password: string): Observable<string> {
 
-    return this.http.post<Token>('api/sign/in', {
+    return this.http.post<string>('api/sign/in', {
       email: login,
       password
     }).pipe(
-      map((t: Token) => {
-        this.authService.token = t.token;
+      map((t: string) => {
+        this.authService.token = t;
         return t;
       })
     );
