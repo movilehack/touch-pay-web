@@ -30,7 +30,7 @@ class PaymentService @Inject constructor(private val credentialDao: CredentialDa
             if (payer.transferMetadata.date == LocalDate.now() && (payer.transferMetadata.value + dto.value) > payer.limit) {
                 throw LimitException()
             } else if (payer.transferMetadata.date != LocalDate.now()) {
-                credentialDao.updateTransferMetadataValue(payer._id!!, 0.0).toSingleDefault(payer)
+                credentialDao.updateTransferMetadataValue(payer._id!!).toSingleDefault(payer)
             }
             else Single.just(payer)
         }.flatMapCompletable { payer ->

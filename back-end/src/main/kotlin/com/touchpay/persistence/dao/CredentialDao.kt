@@ -4,6 +4,7 @@ import com.touchpay.domain.Credential
 import com.touchpay.persistence.json.Find
 import com.touchpay.persistence.json.JsonBuilder
 import io.vertx.core.json.JsonObject
+import java.time.LocalDate
 import javax.inject.Inject
 
 class CredentialDao @Inject constructor(private val database: Database) {
@@ -35,9 +36,10 @@ class CredentialDao @Inject constructor(private val database: Database) {
         "bankId" to bankId
     }.json)
 
-    fun updateTransferMetadataValue(id: String, value: Double) = database.update("credential", Find {
+    fun updateTransferMetadataValue(id: String) = database.update("credential", Find {
         "_id" to id
     }, JsonBuilder {
-        "transferMetadata.value" to value
+        "transferMetadata.date" to LocalDate.now()
+        "transferMetadata.value" to 0.0
     }.json)
 }
