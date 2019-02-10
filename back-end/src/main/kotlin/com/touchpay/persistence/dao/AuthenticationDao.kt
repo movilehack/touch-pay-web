@@ -21,4 +21,20 @@ class AuthenticationDao @Inject constructor(private val database: Database) {
         if (it.isPresent) Optional.of(it.get().getString("password"))
         else Optional.empty()
     }
+
+    fun getPinByUsername(username: String): Single<Optional<String>>
+        = database.aggregateOne("credential", Pipeline {
+        match {
+            "username" to username
+            "enabled" to true
+        }
+
+        projection {
+            -"_id"
+            +"pin"
+        }
+    }).map {
+        if (it.isPresent) Optional.of(it.get().getString("pin"))
+        else Optional.empty()
+    }
 }

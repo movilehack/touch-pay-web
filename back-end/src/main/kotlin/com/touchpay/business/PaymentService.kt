@@ -1,25 +1,40 @@
 package com.touchpay.business
 
 import com.touchpay.consumers.ZoopConsumer
+import com.touchpay.domain.Credential
 import com.touchpay.dto.CashOutDto
 import com.touchpay.dto.PayDto
 import com.touchpay.dto.zoop.TransferenceDto
 import com.touchpay.dto.zoop.TransferenceToBankDto
-import io.reactivex.Completable
+import com.touchpay.exceptions.PinInvalidException
+import com.touchpay.persistence.dao.AuthenticationDao
+import com.touchpay.persistence.dao.CredentialDao
+import org.mindrot.jbcrypt.BCrypt
 import javax.inject.Inject
 
-class PaymentService @Inject constructor(private val consumer: ZoopConsumer) {
-    fun pay(dto: PayDto) = consumer.createTransference(TransferenceDto(
-            payerId = "",
-            receiverId = "",
-            amount = dto.amout,
-            description = dto.deviceId
-    )).flatMapCompletable { Completable.complete() }
+class PaymentService @Inject constructor(private val credentialDao: CredentialDao,
+                                         private val authenticationDao: AuthenticationDao,
+                                         private val consumer: ZoopConsumer,
+                                         private val user: Credential) {
+
+    fun pay(dto: PayDto) = authenticationDao.getPinByUsername(dto.username).flatMapCompletable {
+        if (!it.isPresent || !BCrypt.checkpw(dto.password, it.get())) {
+            throw PinInvalidException()
+        }
+        credentialDao.getByUsername(dto.username).flatMapCompletable { credential ->
+            consumer.createTransference(TransferenceDto(
+                    payerId = credential.get().zoopId,
+                    receiverId = user.zoopId,
+                    amount = dto.amout,
+                    description = dto.deviceId
+            ))
+        }
+    }
 
     fun cashOut(dto: CashOutDto) = consumer.transferToBank(TransferenceToBankDto(
         bankId = "",
         amount = dto.amount,
         statement_descriptor = dto.statement_descriptor,
         description = dto.description
-    )).flatMapCompletable { Completable.complete() }
+    ))
 }

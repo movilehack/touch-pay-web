@@ -99,7 +99,7 @@ class ConsumeApi(private val webClient: WebClient,
 
     fun <T : Any> post(uri: String, kclass: KClass<T>, formData: Map<String, String>, authorization: String?) = form(uri, if (abs) webClient::postAbs else webClient::post, kclass, formData, authorization)
 
-    fun post(uri: String, body: Any?) = body(uri, if (abs) webClient::postAbs else webClient::post, body, authorization)
+    fun post(uri: String, body: Any?) = body(uri, if (abs) webClient::postAbs else webClient::post, body, authorization).toCompletable()
 
     inline fun <reified T : Any> post(uri: String, formData: Map<String, String>, authorization: String? = null) = post(uri, T::class, formData, authorization)
 
