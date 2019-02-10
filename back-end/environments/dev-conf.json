@@ -2,7 +2,7 @@
     "environment": "Development",
     "port" : 80,
     "mongo": {
-        "host": "54.200.187.110",
+        "host": "10.98.0.140",
         "port": 27017,
         "db_name": "touchpay"
     },
