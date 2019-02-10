@@ -1,16 +1,20 @@
 package com.touchpay.business
 
+import com.touchpay.consumers.ZoopConsumer
 import com.touchpay.domain.Credential
 import com.touchpay.domain.TransferMetadata
-import com.touchpay.dto.BlockDto
 import com.touchpay.dto.RegisterDto
+import com.touchpay.dto.zoop.SellerRegisterDto
 import com.touchpay.persistence.dao.CredentialDao
 import io.reactivex.Single
 import org.mindrot.jbcrypt.BCrypt
 import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 
-class RegisterService @Inject constructor(private val passwordService: PasswordService, private val dao: CredentialDao) {
+class RegisterService @Inject constructor(private val passwordService: PasswordService,
+                                          private val dao: CredentialDao,
+                                          private val zoopConsumer: ZoopConsumer) {
     fun register(dto: RegisterDto): Single<String> {
         val pin = passwordService.generateCodePassword()
         return dao.register(Credential(
@@ -31,8 +35,16 @@ class RegisterService @Inject constructor(private val passwordService: PasswordS
                 password = BCrypt.hashpw(dto.password, BCrypt.gensalt()),
                 pin = pin,
                 birthDate = dto.birthDate
-        )).map {
-            pin
-        }
+        )).flatMap {
+            zoopConsumer.createSeller(SellerRegisterDto(
+                id = it,
+                first_name = dto.name,
+                email = dto.email,
+                phone_number = dto.phone,
+                taxpayer_id = dto.cpf,
+                birthdate = dto.birthDate.toString(),
+                created_at = LocalDateTime.now()
+            ))
+        }.map { pin }
     }
 }
