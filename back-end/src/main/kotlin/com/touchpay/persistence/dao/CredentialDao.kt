@@ -17,11 +17,19 @@ class CredentialDao @Inject constructor(private val database: Database) {
 
     fun getByUsername(username: String) = database.genericFindOne<Credential>("credential", Find {
         "login" to username
-    })
+    }).map {
+        it.orElseThrow()
+    }
 
     fun updateBankId(id: String, bankId: String) = database.update("credential", Find {
         "_id" to id
     }, JsonBuilder {
         "bankId" to bankId
+    }.json)
+
+    fun updateTransferMetadataValue(id: String, value: Double) = database.update("credential", Find {
+        "_id" to id
+    }, JsonBuilder {
+        "transferMetadata.value" to value
     }.json)
 }

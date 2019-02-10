@@ -11,6 +11,7 @@ import com.touchpay.exceptions.PinInvalidException
 import com.touchpay.persistence.dao.AuthenticationDao
 import com.touchpay.persistence.dao.CredentialDao
 import io.reactivex.Completable
+import io.reactivex.Single
 import org.mindrot.jbcrypt.BCrypt
 import java.time.LocalDate
 import javax.inject.Inject
@@ -25,16 +26,19 @@ class PaymentService @Inject constructor(private val credentialDao: CredentialDa
             throw PinInvalidException()
         }
 
-        if (credential!!.transferMetadata.date == LocalDate.now() && (credential.transferMetadata.value + dto.value) > credential.limit) {
-            throw LimitException()
-        }
-
-        credentialDao.getByUsername(dto.login).flatMapCompletable { payer ->
+        credentialDao.getByUsername(dto.login).flatMap { payer ->
+            if (payer.transferMetadata.date == LocalDate.now() && (payer.transferMetadata.value + dto.value) > payer.limit) {
+                throw LimitException()
+            } else if (payer.transferMetadata.date != LocalDate.now()) {
+                credentialDao.updateTransferMetadataValue(payer._id!!, 0.0).toSingleDefault(payer)
+            }
+            else Single.just(payer)
+        }.flatMapCompletable { payer ->
             consumer.createTransference(TransferenceDto(
-                payerId = payer.get().zoopId,
-                receiverId = credential.zoopId,
-                amount = dto.value,
-                description = dto.deviceId
+                    payerId = payer.zoopId,
+                    receiverId = credential?.zoopId!!,
+                    amount = dto.value,
+                    description = dto.deviceId
             ))
         }
     }
