@@ -1,6 +1,5 @@
 package com.touchpay.dto.zoop
 
-import com.touchpay.domain.Address
 import java.time.LocalDateTime
 
 data class SellerRegisterDto(
@@ -18,7 +17,7 @@ data class SellerRegisterDto(
         val taxpayer_id : String?,
         val birthdate : String?,
         val statement_descriptor : String?,
-        val description : Address?,
+        val description : AddressDto?,
         val delinquent : Boolean?,
         val default_debit : String?,
         val default_credit : String?,

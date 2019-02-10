@@ -8,9 +8,10 @@ data class Credential(
     val cpf: String,
     val login: String,
     val name: String,
-    val address: String,
     val phone: String,
     val email: String,
+    val address: Address,
+    val enabled: Boolean,
     @field:Sensitive val password: String,
     @field:Sensitive val pin: String,
     val birthDate: LocalDate

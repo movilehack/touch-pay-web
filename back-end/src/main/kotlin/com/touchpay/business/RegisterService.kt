@@ -12,6 +12,7 @@ class RegisterService @Inject constructor(private val passwordService: PasswordS
         val pin = BCrypt.hashpw(passwordService.generateCodePassword(), BCrypt.gensalt())
         return dao.register(Credential(
                 _id = null,
+                enabled = true,
                 cpf = dto.cpf,
                 login = dto.login,
                 name = dto.name,
