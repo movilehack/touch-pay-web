@@ -1,0 +1,117 @@
+<app-menu></app-menu>
+<div class="container">
+  <form class="row default-form" [formGroup]="form" (submit)="register()">
+    <div class="col-12">
+
+      <div class="row">
+        <div class="col-12">
+          <h1>Registro</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <label for="fullname">Nome completo</label>
+          <input id="fullname" class="form-control" type="text" formControlName="fullname" />
+          <ul ngxErrors="fullname" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+        
+        <div class="col-12 col-md-3">
+          <label for="login">Login</label>
+          <input id="login" class="form-control" type="text" formControlName="login"/>
+          <ul ngxErrors="login" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label for="password">Password</label>
+          <input id="password" class="form-control" type="password" formControlName="password"/>
+          <ul ngxErrors="password" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-3">
+          <label for="cpf">CPF</label>
+          <input id="cpf" class="form-control" type="text" formControlName="cpf" placeholder="000.000.000-00" mask="000.000.000-00" />
+          <ul ngxErrors="cpf" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <label for="email">Email</label>
+          <input id="email" class="form-control" type="text" placeholder="email@provider.com" formControlName="email" />
+          <ul ngxErrors="email" class="error-list">
+            <li ngxError="email" when="touched">
+              Email is invalid
+            </li>    
+            <li ngxError="required" when="touched">
+              Email is required
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-2">
+          <label for="birthDate">Data de Nascimento</label>
+          <input id="birthDate" class="form-control" formControlName="birthDate" type="text" placeholder="01/01/1990" mask="00/00/0000" />
+          <ul ngxErrors="birthDate" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+  
+
+        <div class="col-12 col-md-2">
+          <label for="cellphone">Celular</label>
+          <input id="cellphone" class="form-control" formControlName="cellphone" type="text" placeholder="(99) 99999-9999" mask="(00) 90000-0000" />
+          <ul ngxErrors="cellphone" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-2">
+          <label for="cep">CEP</label>
+          <input id="cep" class="form-control" formControlName="cep" type="text" placeholder="99999-999" mask="00000-000" />
+          <ul ngxErrors="cep" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-2">
+          <label for="number">Numero</label>
+          <input id="number" class="form-control" formControlName="number" type="text" placeholder="999" />
+          <ul ngxErrors="number" class="error-list">
+            <li ngxError="required" when="touched">
+              This field is required
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Cadastrar</button>
+        </div>      
+      </div>
+
+    </div>
+  </form>
+</div>

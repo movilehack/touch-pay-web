@@ -11,15 +11,15 @@ body{
     
     li{
         list-style: none;
-        color: red;
-        padding: 0 .75rem;
+        color: $error-color;
+        padding: 0;
         font-size: 12px;
     }
 }
 
 input.ng-invalid.ng-touched{
-    border-bottom: 1px solid #F44336!important;
-    box-shadow: 0 1px 0 0 #F44336!important;
+    border-bottom: 1px solid $error-color!important;
+    box-shadow: 0 1px 0 0 $error-color!important;
 }
 
 .btn-full{
@@ -28,4 +28,14 @@ input.ng-invalid.ng-touched{
 
 .center{
     text-align: center;
+}
+
+.default-form {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: $white;
+}
+
+.row {
+    margin-bottom: 15px;
 }

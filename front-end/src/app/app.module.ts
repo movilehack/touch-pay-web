@@ -11,6 +11,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgxErrorsModule } from '@hackages/ngxerrors';
+import { RegisterComponent } from './pages/register/register.component';
+import { MenuComponent } from './components/menu/menu.component';
+import {NgxMaskModule} from 'ngx-mask';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -20,7 +23,9 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     AppComponent,
     LandingPageComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     NgxErrorsModule,
+    NgxMaskModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
