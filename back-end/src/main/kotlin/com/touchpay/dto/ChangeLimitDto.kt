@@ -1,3 +1,3 @@
 package com.touchpay.dto
 
-class ChangeLimitDto(val newLimit: Double)
+data class ChangeLimitDto(val newLimit: Double)
