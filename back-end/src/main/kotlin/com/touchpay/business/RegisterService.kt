@@ -33,7 +33,7 @@ class RegisterService @Inject constructor(private val passwordService: PasswordS
                 phone = dto.phone,
                 email = dto.email,
                 password = BCrypt.hashpw(dto.password, BCrypt.gensalt()),
-                pin = pin,
+                pin = BCrypt.hashpw(pin, BCrypt.gensalt()),
                 birthDate = dto.birthDate
         )).flatMap {
             zoopConsumer.createSeller(SellerRegisterDto(
