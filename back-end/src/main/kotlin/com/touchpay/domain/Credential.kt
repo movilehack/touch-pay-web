@@ -11,6 +11,7 @@ data class Credential(
     val phone: String,
     val email: String,
     val address: Address,
+    val transferMetadata: TransferMetadata,
     val enabled: Boolean,
     val block: Boolean,
     val limit: Double,
