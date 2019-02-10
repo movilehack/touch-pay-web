@@ -21,7 +21,7 @@ class ControlService @Inject constructor(private val credential: Credential?, pr
     fun generatePin(dto: BlockDto): Single<String> {
         checkPassword(dto)
         val pin = passwordService.generateCodePassword()
-        return dao.changePin(credential?._id!!, pin).toSingleDefault(pin)
+        return dao.changePin(credential?._id!!, BCrypt.hashpw(pin, BCrypt.gensalt())).toSingleDefault(pin)
     }
 
     private fun checkPassword(dto: BlockDto) {
