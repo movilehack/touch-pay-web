@@ -15,7 +15,9 @@ class MainVerticle : AbstractVerticle() {
                 post("change/limit") go { controlController::changeLimit }
                 post("block") go { controlController::block }
                 post("unblock") go { controlController::unblock }
-                post("pay") go { authenticationController::signIn }
+                post("pay") go { paymentController::pay }
+                post("cash/out") go { paymentController::cashOut }
+                post("cash/in") go { paymentController::cashIn }
             }
         }
     }

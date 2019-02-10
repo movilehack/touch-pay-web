@@ -5,6 +5,7 @@ import com.touchpay.dto.zoop.output.BuyerRegisterOutputDto
 import com.touchpay.dto.zoop.output.SellerRegisterOutputDto
 import com.touchpay.dto.zoop.SellerRegisterDto
 import com.touchpay.dto.zoop.TransferenceDto
+import com.touchpay.dto.zoop.TransferenceToBankDto
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Named
@@ -37,29 +38,6 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
             val updated_at : String
     )
 
-    private data class createBuyerOutputDto
-    (
-            val id :	String,
-            val status : String,
-            val resource : String,
-            val account_balance: Int,
-            val current_balance	 : Int,
-            val first_name : String,
-            val last_name : String,
-            val email : String,
-            val phone_number : String,
-            val taxpayer_id : String,
-            val birthdate : String,
-            val description : String,
-            val Address : Address,
-            val delinquent : Boolean,
-            val default_debit : String,
-            val default_credit : String,
-            val metadata : Any,
-            val created_at : String,
-            val updated_at : String
-    )
-
     private data class Address
     (
             val line1: String,
@@ -79,11 +57,12 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
             val transfer_date: String
     )
 
-    fun createBuyer(dto: BuyerRegisterDto) = consume.post<createBuyerOutputDto>("/buyers", dto).map {
-        BuyerRegisterOutputDto(
-                id = it.id
-        )
-    }
+    private data class TransferenceToBank
+    (
+            val amount : Double,
+            val statement_descriptor : String?,
+            val description : String?
+    )
 
     fun createSeller(dto: SellerRegisterDto) = consume.post<createSellerOutputDto>("/sellers/individuals", dto).map {
         SellerRegisterOutputDto(
@@ -91,9 +70,15 @@ class ZoopConsumer @Inject constructor(@Named("zoop") private val consume: Consu
         )
     }
 
-    fun createTransference(dto: TransferenceDto) = consume.post("/transfers/" + dto.payerId + "/to/" + dto.receiverId, Transference(
+    fun createTransference(dto: TransferenceDto) = consume.post("/transfers/${{dto.payerId}}/to/${{dto.receiverId}}", Transference(
             amount = dto.amount,
             description = dto.description,
             transfer_date = LocalDate.now().toString()
+    ))
+
+    fun transferToBank(dto: TransferenceToBankDto) = consume.post("/bank_accounts/${{dto.bankId}}/transfers", TransferenceToBank(
+            amount  = dto.amount,
+            statement_descriptor = dto.statement_descriptor,
+            description = dto.description
     ))
 }
