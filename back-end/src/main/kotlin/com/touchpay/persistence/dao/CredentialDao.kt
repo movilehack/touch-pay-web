@@ -11,4 +11,6 @@ class CredentialDao @Inject constructor(private val database: Database) {
     }).map {
         it.orElseThrow()
     }
+
+    fun register(credential: Credential) = database.create("credential", credential)
 }
