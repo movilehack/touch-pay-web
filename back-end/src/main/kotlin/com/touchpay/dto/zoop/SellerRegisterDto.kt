@@ -8,5 +8,6 @@ data class SellerRegisterDto(
         val phone_number : String?,
         val taxpayer_id : String?,
         val birthdate : String?,
-        val created_at: LocalDateTime?
+        val created_at: LocalDateTime?,
+        val delinquent: Boolean
 )

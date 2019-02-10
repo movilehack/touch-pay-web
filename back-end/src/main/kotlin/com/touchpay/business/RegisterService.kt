@@ -23,7 +23,8 @@ class RegisterService @Inject constructor(private val passwordService: PasswordS
                 phone_number = dto.phone,
                 taxpayer_id = dto.cpf,
                 birthdate = dto.birthDate.toString(),
-                created_at = LocalDateTime.now()
+                created_at = LocalDateTime.now(),
+                delinquent = false
         )).flatMap {
             dao.register(Credential(
                     _id = null,

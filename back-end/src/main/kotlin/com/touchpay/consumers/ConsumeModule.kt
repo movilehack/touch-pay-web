@@ -1,6 +1,5 @@
 package com.touchpay.consumers
 
-
 import com.touchpay.common.Auditor
 import dagger.Module
 import dagger.Provides
